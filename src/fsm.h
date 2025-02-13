@@ -5,7 +5,7 @@
 #include <functional>
 #include <array>
 
-template <std::size_t N>
+template <std::size_t N, std::size_t M>
 class CFsm
 {
 public:
@@ -24,7 +24,7 @@ public:
         unsigned int tostate;
     };
 
-    CFsm(const std::array<CState, N>& arrStates);
+    CFsm(const std::array<CState, N>& arrStates, const std::array<CTransition, M>& arrTransitions);
     ~CFsm() = default;
 
     void ExecuteTransision();
@@ -32,27 +32,29 @@ public:
 
 private:
     const std::array<CState, N> m_arrStates;
+    const std::array<CTransition, M> m_arrTransitions;    
     unsigned int m_current_state;
 };
 
 // Define the constructor inside the header file
-template <std::size_t N>
-CFsm<N>::CFsm(const std::array<CState, N>& arrStates)
-    : m_arrStates(arrStates), m_current_state(0) 
+template <std::size_t N, std::size_t M>
+CFsm<N, M>::CFsm(const std::array<CState, N>& arrStates, 
+                 const std::array<CTransition, M>& arrTransitions)
+    : m_arrStates(arrStates), m_arrTransitions(arrTransitions), m_current_state(0) 
 {
     // Execute on new state enter function
     m_arrStates[m_current_state].onEnter();    
     std::cout << "Initial state is : " << m_arrStates[m_current_state].name <<  std::endl;    
 }
 
-template <std::size_t N>    
-void CFsm<N>::ExecuteTransision()
+template <std::size_t N, std::size_t M>   
+void CFsm<N, M>::ExecuteTransision()
 {    
    
 }    
 
-template <std::size_t N>    
-bool CFsm<N>::SetState(unsigned int state)
+template <std::size_t N, std::size_t M>   
+bool CFsm<N, M>::SetState(unsigned int state)
 {
     bool result = false;
     if (state < N)

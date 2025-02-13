@@ -13,13 +13,29 @@ class CApplication
         NUMBER_OF_STATES
     };
 
+    enum 
+    {
+        TRANSITION_INIT_TO_IDLE,
+        TRANSITION_IDLE_TO_ACTIVE,
+        TRANSITION_ACTIVE_TO_IDLE,
+        NUMBER_OF_TRANSITIONS
+    };    
+
     // Now use std::array<CFsm<NUMBER_OF_STATES>::CState, NUMBER_OF_STATES>
-    std::array<CFsm<NUMBER_OF_STATES>::CState, NUMBER_OF_STATES> states = 
+    std::array<CFsm<NUMBER_OF_STATES, NUMBER_OF_TRANSITIONS>::CState, NUMBER_OF_STATES> states = 
     {{
         { [this]() { OnInitialEnter(); }, [this]() { OnInitialExit(); }, "State Initial" },  // STATE_INITIAL This state will be set as initial state 
         { [this]() { OnIdleEnter(); },    [this]() { OnIdleExit(); },    "State Idle" },     // STATE_IDLE
         { [this]() { OnActiveEnter(); },  [this]() { OnActiveExit(); },  "State Active" }    // STATE_ACTIVE     
     }};
+
+    // Array of transitions
+    std::array<CFsm<NUMBER_OF_STATES, NUMBER_OF_TRANSITIONS>::CTransition, NUMBER_OF_TRANSITIONS> transitions = 
+    {{
+        { STATE_INITIAL, STATE_IDLE }, 
+        { STATE_IDLE, STATE_ACTIVE },
+        { STATE_ACTIVE, STATE_IDLE }
+    }};    
 
 public:
     CApplication();
@@ -33,12 +49,12 @@ public:
     void Run();
 
 private:
-    CFsm<NUMBER_OF_STATES> m_Fsm;  // Instantiate CFsm with NUMBER_OF_STATES
+    CFsm<NUMBER_OF_STATES, NUMBER_OF_TRANSITIONS> m_Fsm;
 };
 
 // Constructor: Pass the state array to the CFsm constructor
 CApplication::CApplication()
-    : m_Fsm(states)  // Correctly pass the states array to CFsm constructor
+    : m_Fsm(states, transitions)  // Correctly pass the states array to CFsm constructor
 {
 }
 
