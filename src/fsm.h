@@ -48,9 +48,31 @@ CFsm<N, M>::CFsm(const std::array<CState, N>& arrStates,
 }
 
 template <std::size_t N, std::size_t M>   
-void CFsm<N, M>::ExecuteTransision()
-{    
-   
+void CFsm<N, M>::ExecuteTransision(unsigned int transision)
+{        
+    if (transision < M)
+    {
+        const auto& t = m_arrTransitions[transision];
+
+        if (t.fromstate != m_current_state)
+        {
+            std::cout << "Invalid transition: current state is " 
+                      << m_arrStates[m_current_state].name 
+                      << ", but transition expects " 
+                      << m_arrStates[t.fromstate].name << std::endl;
+            return;
+        }
+
+        std::cout << "Executing transition " << transision << ": "
+                  << m_arrStates[t.fromstate].name << " -> "
+                  << m_arrStates[t.tostate].name << std::endl;
+
+        SetState(t.tostate);
+    }
+    else
+    {
+        std::cout << "Transition index is out of bounds" << std::endl;
+    }
 }    
 
 template <std::size_t N, std::size_t M>   
