@@ -27,7 +27,7 @@ public:
     CFsm(const std::array<CState, N>& arrStates, const std::array<CTransition, M>& arrTransitions);
     ~CFsm() = default;
 
-    void ExecuteTransision();
+    void ExecuteTransition(unsigned int transision);
     bool SetState(unsigned int state);   
 
 private:
@@ -48,7 +48,7 @@ CFsm<N, M>::CFsm(const std::array<CState, N>& arrStates,
 }
 
 template <std::size_t N, std::size_t M>   
-void CFsm<N, M>::ExecuteTransision(unsigned int transision)
+void CFsm<N, M>::ExecuteTransition(unsigned int transision)
 {        
     if (transision < M)
     {
@@ -62,10 +62,6 @@ void CFsm<N, M>::ExecuteTransision(unsigned int transision)
                       << m_arrStates[t.fromstate].name << std::endl;
             return;
         }
-
-        std::cout << "Executing transition " << transision << ": "
-                  << m_arrStates[t.fromstate].name << " -> "
-                  << m_arrStates[t.tostate].name << std::endl;
 
         SetState(t.tostate);
     }
@@ -97,7 +93,6 @@ bool CFsm<N, M>::SetState(unsigned int state)
     else
     {
         std::cout << "State index is out of boundary"  << std::endl;
-
     }
 
     return result;
@@ -105,4 +100,3 @@ bool CFsm<N, M>::SetState(unsigned int state)
 
 
 #endif
-
