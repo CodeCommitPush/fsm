@@ -6,7 +6,6 @@ Lightweight, flexible, and easy to integrate into embedded or general-purpose pr
 ## Features
 
 - **Header-only**: Just include one header to use.
-- **Zero dependencies**: No STL or external libraries required.
 - **Event-driven**: Transitions are triggered by events.
 - **Modern C++**: Clean, template-based design.
 - **Customizable**: Extendable with state entry/exit callbacks, guards, and actions.
