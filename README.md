@@ -1,10 +1,22 @@
-# FSM - Final State Machine 
-# Description:
-This repository contains a C++23 module implementing a Finite State Machine (FSM) state handler. It leverages C++23 modules for improved compilation performance and code organization. The FSM is designed to handle state transitions efficiently while maintaining a modular and extensible structure.
+# FSM
 
-# Features:
+A minimal, header-only Finite State Machine (FSM) implementation in modern C++.  
+Lightweight, flexible, and easy to integrate into embedded or general-purpose projects.
 
-Uses C++23 modules for better compilation times and encapsulation.
-Implements a flexible and type-safe FSM design.
-Supports event-driven state transitions.
-Provides an example usage scenario for demonstration.
+## Features
+
+- **Header-only**: Just include one header to use.
+- **Zero dependencies**: No STL or external libraries required.
+- **Event-driven**: Transitions are triggered by events.
+- **Modern C++**: Clean, template-based design.
+- **Customizable**: Extendable with state entry/exit callbacks, guards, and actions.
+- **Suitable for embedded**: Designed with small memory footprint and simplicity in mind.
+
+## Getting Started
+
+### Installation
+
+Clone or copy the `fsm.hpp` header into your project:
+
+```bash
+git clone https://github.com/CodeCommitPush/fsm.git
