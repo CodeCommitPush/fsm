@@ -6,8 +6,7 @@ SRC_DIR = ../src
 BUILD_DIR = .
 
 # Source files
-SRC = $(SRC_DIR)/main.cpp \
-      $(SRC_DIR)/fsm.cpp
+SRC = $(SRC_DIR)/main.cpp
 
 # Output executable
 TARGET = $(BUILD_DIR)/app
