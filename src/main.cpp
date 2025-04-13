@@ -60,8 +60,9 @@ CApplication::CApplication()
 
 void CApplication::Init()
 {
-    m_Fsm.SetState(STATE_IDLE);
-    m_Fsm.SetState(10);    
+    m_Fsm.SetState(STATE_INITIAL); 
+    m_Fsm.ExecuteTransiosion(TRANSITION_IDLE_TO_ACTIVE);
+    m_Fsm.ExecuteTransiosion(TRANSITION_ACTIVE_TO_IDLE);     
 }
 
 void CApplication::Run()
@@ -73,7 +74,8 @@ int main()
     CApplication app;
 
     app.Init();
-
+    m_Fsm.ExecuteTransiosion(TRANSITION_INIT_TO_IDLE);
+    m_Fsm.ExecuteTransiosion(TRANSITION_INIT_TO_IDLE);
     return 0;
 }
 
