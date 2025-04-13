@@ -5,6 +5,9 @@
 
 class CApplication
 {
+public:    
+
+    // States
     enum
     {
         STATE_INITIAL,
@@ -13,6 +16,7 @@ class CApplication
         NUMBER_OF_STATES
     };
 
+    // Transitions
     enum 
     {
         TRANSITION_INIT_TO_IDLE,
@@ -21,10 +25,10 @@ class CApplication
         NUMBER_OF_TRANSITIONS
     };    
 
-    // Now use std::array<CFsm<NUMBER_OF_STATES>::CState, NUMBER_OF_STATES>
+    // States definition table 
     std::array<CFsm<NUMBER_OF_STATES, NUMBER_OF_TRANSITIONS>::CState, NUMBER_OF_STATES> states = 
     {{
-        { [this]() { OnInitialEnter(); }, [this]() { OnInitialExit(); }, "State Initial" },  // STATE_INITIAL This state will be set as initial state 
+        { [this]() { OnInitialEnter(); }, [this]() { OnInitialExit(); }, "State Initial" },  // STATE_INITIAL
         { [this]() { OnIdleEnter(); },    [this]() { OnIdleExit(); },    "State Idle" },     // STATE_IDLE
         { [this]() { OnActiveEnter(); },  [this]() { OnActiveExit(); },  "State Active" }    // STATE_ACTIVE     
     }};
@@ -37,7 +41,7 @@ class CApplication
         { STATE_ACTIVE, STATE_IDLE }
     }};    
 
-public:
+
     CApplication();
     void OnIdleEnter() { std::cout << "OnIdleEnter() \n"; }
     void OnIdleExit() { std::cout << "OnIdleExit() \n"; }
@@ -46,27 +50,18 @@ public:
     void OnActiveEnter() { std::cout << "OnActiveEnter() \n"; }
     void OnActiveExit() { std::cout << "OnActiveExit() \n"; }
     void Init();
-    void Run();
 
-private:
     CFsm<NUMBER_OF_STATES, NUMBER_OF_TRANSITIONS> m_Fsm;
 };
 
-// Constructor: Pass the state array to the CFsm constructor
 CApplication::CApplication()
-    : m_Fsm(states, transitions)  // Correctly pass the states array to CFsm constructor
+    : m_Fsm(states, transitions) 
 {
 }
 
 void CApplication::Init()
 {
-    m_Fsm.SetState(STATE_INITIAL); 
-    m_Fsm.ExecuteTransiosion(TRANSITION_IDLE_TO_ACTIVE);
-    m_Fsm.ExecuteTransiosion(TRANSITION_ACTIVE_TO_IDLE);     
-}
-
-void CApplication::Run()
-{
+    m_Fsm.ExecuteTransition(TRANSITION_INIT_TO_IDLE);     
 }
 
 int main()
@@ -74,8 +69,7 @@ int main()
     CApplication app;
 
     app.Init();
-    m_Fsm.ExecuteTransiosion(TRANSITION_INIT_TO_IDLE);
-    m_Fsm.ExecuteTransiosion(TRANSITION_INIT_TO_IDLE);
+    app.m_Fsm.ExecuteTransition(CApplication::TRANSITION_IDLE_TO_ACTIVE);
+    app.m_Fsm.ExecuteTransition(CApplication::TRANSITION_ACTIVE_TO_IDLE);
     return 0;
 }
-
